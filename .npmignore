@@ -1,0 +1,5 @@
+.idea/
+scratch/
+src/
+dist/tsconfig.tsbuildinfo
+example/

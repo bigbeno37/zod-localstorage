@@ -1,6 +1,6 @@
 {
   "name": "zod-localstorage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Typescript library to allow typesafe access to localstorage using schema validation from Zod",
   "main": "dist/index.js",
   "scripts": {

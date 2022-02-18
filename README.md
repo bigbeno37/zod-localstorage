@@ -52,14 +52,28 @@ const todoItems = [{ name: "Write some code", completed: false }];
 Storage.setItem("TODO_ITEMS", todoItems);
 ```
 
-## FP Module
-For a more functional approach, there is also the `ZodLocalStorage` class found within `zod-localstorage/fp`. This has the same API as described above, with a couple major differences.
- - `ZodLocalStorage.getItemOrThrow()` has been removed.
- - `ZodLocalStorage.getItem()` utilises the `purify-ts` library to return an `Either`, rather than a custom validation object.
+## FP (Functional Programming) Module
+For those who would prefer a more functional approach, `zod-localstorage` also comes with module that is more suited to a functional style, and uses the popular `purify-ts` library. As prior, create an object containing storage keys mapped to Zod schemas:
+
 ```ts
-import { ZodLocalStorage } from "zod-localstorage/fp";
+import {generateAccessor} from "zod-localstorage/fp";
 
-const Storage = new ZodLocalStorage(LocalStorageKeys);
+const TodoItems = z.array(z.object({
+    name: z.string(),
+    completed: z.boolean()
+}));
 
-const validationResult = Storage.getItem("TODO_ITEMS"); // Returns Either<ZodError, Array<{ name: string, completed: boolean }>>
+const LocalStorageKeys = {
+    TODO_ITEMS: TodoItems
+};
+
+const getKey = generateAccessor(LocalStorageKeys);
+
+const todoItems = getKey("TODO_ITEMS");
+
+todoItems.setItem([ { name: "Learn Haskell", completed: false } ]); // Sets the "TODO_ITEMS" key in localStorage to the given value
+
+const result = todoItems.getItem(); // Currently of type Either<ZodError, Array<{ name: string, completed: boolean}>
+
+todoItems.clear(); // Clears the todo items from local storage
 ```

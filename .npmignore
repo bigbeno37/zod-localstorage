@@ -3,3 +3,4 @@ scratch/
 src/
 dist/tsconfig.tsbuildinfo
 example/
+.eslintrc.js
